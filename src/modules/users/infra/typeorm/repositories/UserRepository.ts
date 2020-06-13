@@ -4,7 +4,7 @@ import IUserRepository from '@modules/users/repositories/IUserRepository';
 import User from '@modules/users/infra/typeorm/entities/User';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 
-class AppointmentsRepository implements IUserRepository {
+class UserRepository implements IUserRepository {
   private ormRepository: Repository<User>;
 
   constructor() {
@@ -38,4 +38,4 @@ class AppointmentsRepository implements IUserRepository {
   }
 }
 
-export default AppointmentsRepository;
+export default UserRepository;
