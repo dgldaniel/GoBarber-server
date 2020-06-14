@@ -2,16 +2,15 @@ import { injectable, inject } from 'tsyringe';
 import { isAfter, addHours } from 'date-fns';
 
 import AppError from '@shared/errors/AppError';
-// import User from '@modules/users/infra/typeorm/entities/User';
 
+// import User from '../infra/typeorm/entities/User';
 import IUserRepository from '../repositories/IUserRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
-
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
-  password: string;
   token: string;
+  password: string;
 }
 
 @injectable()
@@ -27,7 +26,7 @@ class ResetPasswordService {
     private hashProvider: IHashProvider,
   ) {}
 
-  public async execute({ password, token }: IRequest): Promise<void> {
+  public async execute({ token, password }: IRequest): Promise<void> {
     const userToken = await this.userTokensRepository.findByToken(token);
 
     if (!userToken) {
@@ -49,7 +48,7 @@ class ResetPasswordService {
 
     user.password = await this.hashProvider.generateHash(password);
 
-    await this.usersRepository.save(user);
+    this.usersRepository.save(user);
   }
 }
 
